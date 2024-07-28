@@ -9,8 +9,8 @@ class Object:
         self.scale: Vector2 = Vector2(1, 1)
         self.local_rotation: float = 0.0
         self.rotation: float = 0.0
-        self.parent: Object = None
-        self.children: list = []
+        self._parent: Object = None
+        self._children: list = []
         
 
     def start(self):
@@ -27,7 +27,7 @@ class Object:
 
     # Updates all the transform properties
     def _update_transform(self):
-        if self.parent != None:
+        if self._parent != None:
             self.position = vector2_add(self.parent.position, self.local_position)
             self.scale = vector2_add(self.parent.scale, self.local_scale)
             self.rotation = self.parent.rotation + self.local_rotation
@@ -35,3 +35,22 @@ class Object:
             self.position = self.local_position
             self.scale = self.local_scale
             self.rotation = self.local_rotation
+
+    def set_parent(self, parent: 'Object'):
+        # Remove this object as a child from the current parent
+        if self._parent != None:
+            self._parent.remove_child(child=self)
+
+        self._parent = parent               # Set the new parent object
+        if(self._parent != None):
+            self._parent.add_child(child=self)
+
+    def add_child(self, child: 'Object'):
+        if not child in self._children:
+            self._children.append(child)
+
+    def remove_child(self, child: 'Object'):
+        if child in self._children:
+            self._children.remove(child)
+        
+    
