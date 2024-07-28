@@ -1,13 +1,14 @@
 from pyray import *
 from enum import Enum
+from applications.terminal import Terminal
 
 class BaseMachine:
-    def __init__(self, users: list):
+    def __init__(self, users: list, apps: list):
         self.users: list = users if len(users) > 0 else BaseMachine.generate_users()
         self.machine_state: MachineState = MachineState.LOCKED
         self.machine_logs: list = []
         self.logged_in_user: UserAccount = None
-        
+        self.installed_apps: list = apps if len(apps) > 0 else BaseMachine.get_default_apps()
 
     # Logs a user acount in
     def login(self, uname: str, pword: str):
@@ -42,6 +43,10 @@ class BaseMachine:
     @staticmethod
     def generate_users():
         return [UserAccount(username='Test', password='Test', super_user=True)]
+
+    @staticmethod
+    def get_default_apps():
+        return [Terminal()]
     
 
 class MachineState(Enum):
