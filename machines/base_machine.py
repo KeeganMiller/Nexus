@@ -6,26 +6,36 @@ class BaseMachine:
         self.users: list = users if len(users) > 0 else BaseMachine.generate_users()
         self.machine_state: MachineState = MachineState.LOCKED
         self.machine_logs: list = []
+        self.logged_in_user: UserAccount = None
         
 
     # Logs a user acount in
     def login(self, uname: str, pword: str):
-        for user in self.users:
-            if uname == user.username:
-                if pword == user.password:
-                    self.machine_state = MachineState.ACTIVE
+        for user in self.users:         # Loop through each user on the machine
+            if uname == user.username:              # Check if username matches
+                if pword == user.password:          # Check if password matches
+                    self.machine_state = MachineState.ACTIVE            # Update the machine state
+                    # Add log
                     self.machine_logs.append(MachineLog(ip='TODO', user=uname, date='TODO', time='TODO', note='User has logged in'))
-                    return 'Success'
-                else:
+                    self.logged_in_user = user          # Set the logged in user
+                    return 'Success'                
+                else:           # Password doesn't match username
+                    # Added machine log
                     self.machine_logs.append(MachineLog(ip='TODO', user=uname, date='TODO', time='TODO', note='Incorrect password'))
-                    return 'Incorrect password'
-            else:
-                self.machine_logs.append(MachineLog(
-                    ip='TODO', user=uname, date='TODO', time='TODO', note=f'Login attempt failed with username:{uname}'))
-                return 'User does not exist'
+                    return 'Incorrect password'   
+
+        # User doesn't exist
+        # Add the machine log  
+        self.machine_logs.append(MachineLog(
+            ip='TODO', user=uname, date='TODO', time='TODO', note=f'Login attempt failed with username:{uname}'))
+        return 'User does not exist'
             
+    # Logs the user out
     def logout(self, shutdown: bool = False):
-        
+        self.machine_logs.append(MachineLog(
+            ip='TODO', user=self.logged_in_user.username, date='TODO', time='TODO', note=f'User logged out'))
+        self.logged_in_user = None
+        self.machine_state = MachineState.POWERED_OFF if shutdown else MachineState.LOCKED
         
         
 
