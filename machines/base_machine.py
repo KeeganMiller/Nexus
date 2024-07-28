@@ -6,6 +6,7 @@ class BaseMachine:
     def __init__(self, users: list, apps: list):
         self.users: list = users if len(users) > 0 else BaseMachine.generate_users()
         self.machine_state: MachineState = MachineState.LOCKED
+        self.connection_type: ConnectionType = ConnectionType.MINE
         self.machine_logs: list = []
         self.logged_in_user: UserAccount = None
         self.installed_apps: list = apps if len(apps) > 0 else BaseMachine.get_default_apps()
@@ -53,6 +54,11 @@ class MachineState(Enum):
     POWERED_OFF = 1
     LOCKED = 2
     ACTIVE = 3
+
+class ConnectionType(Enum):
+    TERMINAL = 1
+    RAT = 2
+    MINE = 3
 
 class UserAccount:
     def __init__(self, username: str, password: str, super_user: bool):
