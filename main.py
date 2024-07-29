@@ -1,20 +1,25 @@
 from pyray import *
 from core.object import Object
 from core.resources import Resources
-from test_object import TestObject
+from machines.base_machine import BaseMachine, UserAccount
 
-init_window(800, 450, "Nexus")
+class Main:
+    home_machine = BaseMachine(users=[UserAccount(username='H4ck3r', password='Hacker', super_user=True)])
 
-Resources.add_object(obj=TestObject('Test'))
+    def run():
+        init_window(800, 450, "Nexus")
 
-while not window_should_close():
-    # Update here
-    Resources.update(get_frame_time)
-    # Draw Here
-    begin_drawing()
-    clear_background(WHITE)
-    Resources.draw()
-    end_drawing()
+        while not window_should_close():
+            # Update here
+            Resources.update(get_frame_time)
+            # Draw Here
+            begin_drawing()
+            clear_background(WHITE)
+            Resources.draw()
+            end_drawing()
 
 
-close_window()
+        close_window()
+
+
+Main.run()
