@@ -1,10 +1,11 @@
 from pyray import *
 from core.object import Object
 from core.resources import Resources
-from machines.base_machine import BaseMachine, UserAccount
+from machines.base_machine import BaseMachine, UserAccount, ConnectionType
 
 class Main:
     home_machine = BaseMachine(users=[UserAccount(username='H4ck3r', password='Hacker', super_user=True)])
+    home_machine.connection_type = ConnectionType.MINE
 
     def run():
         init_window(800, 450, "Nexus")

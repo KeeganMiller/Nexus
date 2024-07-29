@@ -54,3 +54,13 @@ class Object:
             self._children.remove(child)
         
     
+class TextureObject(Object):
+    def __init__(self, name: str, texture: Texture2D, tint: Color = WHITE):
+        super().__init__(name)
+        self.texture = texture
+        self.tint = tint
+
+    def draw(self):
+        super().draw()
+        if not self.texture == None and self.texture.id > 0:
+            draw_texture_ex(self.texture, self.position, self.rotation, self.scale)
