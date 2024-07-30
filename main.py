@@ -10,6 +10,8 @@ class Main:
     def run():
         init_window(800, 450, "Nexus")
 
+        Main.load_assets()
+
         while not window_should_close():
             # Update here
             Resources.update(get_frame_time)
@@ -21,6 +23,9 @@ class Main:
 
 
         close_window()
+
+    def load_assets():
+        Resources.get_texture('terminal', 'assets/terminal.png')
 
 
 Main.run()

@@ -1,6 +1,7 @@
 from pyray import *
 from enum import Enum
 from applications.terminal import Terminal
+from core.resources import Resources
 
 class BaseMachine:
     def __init__(self, users: list, apps: list):
@@ -47,7 +48,7 @@ class BaseMachine:
 
     @staticmethod
     def get_default_apps():
-        return [Terminal()]
+        return [Terminal(icon=Resources.get_texture('terminal'), name='Terminal')]
     
 
 class MachineState(Enum):
